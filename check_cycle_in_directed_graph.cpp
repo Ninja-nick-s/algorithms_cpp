@@ -25,8 +25,8 @@ string nope="NO";
 
 /* CHECK t */
 map<int , vector<int> > adj; //adjacency list
-map<int , bool> vis; // visited array for 0 based indexing;
-map<int , bool> dfsvis;
+map<int , bool> vis; // visited array;
+map<int , bool> dfsvis;		//dfs visited array to check cycle in directed graph
 bool cycleindir(int start){			// function to check cycle in directed graph
 	vis[start] = true;
 	dfsvis[start] = true;
@@ -48,7 +48,14 @@ void graph(){
     	//adj[y].push_back(x);
     }
 
-    cout<< cycleindir(0);
+    bool cycle = false;
+    rep(i,0,n){			//because dfs might break because it is a directed graph
+    	if(!vis[i]){
+    		cycle = cycleindir(i);
+    		if(cycle)break;
+    	}
+    }
+    cout<< cycle;
 }
 
 void Solve(){
