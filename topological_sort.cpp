@@ -47,6 +47,7 @@ void graph(){
     stack<int> st;
 
     /*The idea behind toposort is to print u before v if u->v */
+	// topological sort is only useful for directed acyclic(without any cycle) graph
     rep(i,0,n){
     	if(!vis[i]) {
     		toposort(i,st); 
