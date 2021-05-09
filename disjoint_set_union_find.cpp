@@ -41,6 +41,8 @@ int findpar(int node){      // time complexity = O(4*constant) = O(1);
 }
 
 void union(int u , int v){  //time complexity = O(1);
+    u = findpar(u);
+    v = findpar(v);
     if(rank[u] > rank[v]){
         parent[v] = u;
     }
