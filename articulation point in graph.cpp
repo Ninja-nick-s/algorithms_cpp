@@ -26,22 +26,27 @@ string nope="NO";
 map<int , vector<int> > adj; //adjacency list
 map<int , bool> vis; // visited array
 int tin = 0;
-void dfscall(int start ,int parent , int timer[] , int low[]){
+void dfscall(int start ,int parent , int timer[] , int low[], vector<int> &isarticulation){
 	vis[start] = true;	//this is a function to find articulation point in graph
 	timer[start] = low[start] = tin++;
+	int child = 0;
 	for(auto x:adj[start]){
 		if(x == parent)continue;
 
 		if(!vis[x]){
-			dfscall(x,start,timer,low);
+			dfscall(x,start,timer,low,isarticulation);
 			low[start] = min(low[start] , low[x]);
 			if(low[x] >= timer[start] && parent!=-1){
-				cout<<start<<"\n";
+				isarticulation[start] = 1;
 			}
+			child++;
 		}
 		else{
 			low[start] = min(timer[x] , low[start]);
 		}
+	}
+	if(parent == -1 && child>1){ //This is to check that if individual child > 1 if parent =-1
+		isarticulation[start] = 1; // because if thats the case then that node will also be an articulation point
 	}
 }
 /*
@@ -59,14 +64,18 @@ void graph(){
     }
     int timer[n];
     int low[n];
+    vector<int> isarticulation(n,0);
     rep(i,0,n){
     	timer[i] = -1;
     	low[i] = -1;
     }
     rep(i,0,n){
     	if(!vis[i]){
-    		dfscall(i,-1,timer,low);
+    		dfscall(i,-1,timer,low,isarticulation);
     	}
+	}
+	rep(i,0,n){
+		if(isarticulation[i] == 1)cout<<i<<"\n";
 	}
 }
 /* CHECK t */
