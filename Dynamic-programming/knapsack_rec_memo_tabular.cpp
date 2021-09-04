@@ -28,35 +28,36 @@ string nope="NO";
 int dp[10000][10000];
 
 int knapsack(int val[],int wt[],int W,int n){   // 0/1 knapsack problem
-    if( n==0 || W==0 ){
+    if( n == 0 || W == 0 ){
         return 0;           //base case
     }
 
     if( dp[n][W] != -1 ){
-        return dp[n][w];    // To return the memoized value
+        return dp[n][W];    // To return the memoized value
     }
 
     if( wt[n-1] <= W ){
-        return dp[n][w] = max(
-                val[n-1] + knapsack(val,wt,W-wt[n-1],n-1) , //including the value
-                knapsack(val,wt,W,n-1)         //for not including the value & weight
-            ) ;
+        return dp[n][W] = max( val[n-1] + knapsack(val,wt,W-wt[n-1],n-1) , knapsack(val,wt,W,n-1));
     }
-    else if( wt[n-1]> W ){
+    else{
         return knapsack(val,wt,W,n-1);
     }
 }
 
 int knapsack_tab(int val[],int wt[],int W, int n){    //tabular way of solving knapsack problem
-    for(int i= 0;i<10000;i++){
-        dp[i][0] = dp[0][i] = 0;    //initialisation of 2d array refering base case
+    for(int i= 0;i<=n;i++){
+        dp[i][0] = 0;    //initialisation of 2d array refering base case
     }
 
-    for(int i = 0;i<n+1;i++){
-        for(int j = 0;j<W+1;j++){
+    for(int i = 0;i<=W;i++){
+        dp[i][0] = 0;
+    }
+
+    for(int i = 1;i<n+1;i++){
+        for(int j = 1;j<W+1;j++){
             if(wt[i-1] <= W){
                 dp[i][j] = max(val[i-1] + dp[i-1][j-wt[i-1]] ,
-                        dp[i-1][j] ;
+                        dp[i-1][j] 
                     );
             }
             else{
