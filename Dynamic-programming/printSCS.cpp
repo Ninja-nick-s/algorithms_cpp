@@ -26,7 +26,7 @@ string yup="YES";
 string nope="NO";
 
 
-//To print shortest common subsequence
+//To print shortest common supersequence
 
 string printSCS(string a,string b,int n,int m){
     int dp[n+1][m+1];
